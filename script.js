@@ -326,7 +326,7 @@ function startPhotoShow() {
             image: './images/photo1.jpg'
         },
         {
-            text: 'Birthday Moment 🎂',
+            text: 'First Photobooth 📸',
             image: './images/photo2.jpg'
         },
         {
