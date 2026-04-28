@@ -12,7 +12,7 @@ let isPlaying = false;
 let playbackInterval = null;
 
 // Initialize the application
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     initializeApp();
 });
 
@@ -28,7 +28,7 @@ function simulateLoading() {
     const progressText = document.querySelector('.progress-text');
     const loadingText = document.querySelector('.loading-text');
     const loadingScreen = document.getElementById('loading-screen');
-    
+
     let progress = 0;
     const loadingMessages = [
         '&gt; INITIALIZING..._',
@@ -37,38 +37,38 @@ function simulateLoading() {
         '&gt; ALMOST READY..._',
         '&gt; LOADING COMPLETE!_'
     ];
-    
+
     let messageIndex = 0;
-    
+
     const interval = setInterval(() => {
         progress += Math.random() * 15 + 5; // Random increment between 5-20
-        
+
         if (progress > 100) progress = 100;
-        
+
         // Update progress bar with smooth animation
         progressFill.style.width = progress + '%';
         progressText.textContent = Math.floor(progress) + '%';
-        
+
         // Update loading message based on progress
         const newMessageIndex = Math.floor((progress / 100) * (loadingMessages.length - 1));
         if (newMessageIndex !== messageIndex && newMessageIndex < loadingMessages.length) {
             messageIndex = newMessageIndex;
-            
+
             // Fade out current message
             loadingText.style.opacity = '0';
-            
+
             setTimeout(() => {
                 loadingText.innerHTML = loadingMessages[messageIndex];
                 loadingText.style.opacity = '1';
             }, 200);
         }
-        
+
         if (progress >= 100) {
             clearInterval(interval);
-            
+
             // Add completion animation
             loadingScreen.classList.add('loading-complete');
-            
+
             // Wait for completion animation, then transition
             setTimeout(() => {
                 transitionToMainScreen();
@@ -80,28 +80,28 @@ function simulateLoading() {
 function transitionToMainScreen() {
     const loadingScreen = document.getElementById('loading-screen');
     const mainScreen = document.getElementById('main-screen');
-    
+
     // Start fade out animation for loading screen
     loadingScreen.classList.add('fade-out');
-    
+
     // After fade out completes, show main screen
     setTimeout(() => {
         loadingScreen.classList.remove('active', 'fade-out', 'loading-complete');
-        
+
         // Show main screen with entrance animation
         mainScreen.classList.add('active', 'screen-entering');
         currentScreen = 'main';
-        
+
         // Add staggered animations for elements
         setTimeout(() => {
             initializeMainScreen();
         }, 100);
-        
+
         // Remove entrance class after animation
         setTimeout(() => {
             mainScreen.classList.remove('screen-entering');
         }, 1200);
-        
+
     }, 600);
 }
 
@@ -109,20 +109,20 @@ function initializeMainScreen() {
     // Add interactive elements and event listeners
     const menuButtons = document.querySelectorAll('.menu-btn');
     const startBtn = document.querySelector('.start-btn');
-    
+
     // Add button click animations
     menuButtons.forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function () {
             this.style.transform = 'scale(0.95)';
             setTimeout(() => {
                 this.style.transform = '';
             }, 150);
         });
     });
-    
+
     // Start button functionality
     if (startBtn) {
-        startBtn.addEventListener('click', function() {
+        startBtn.addEventListener('click', function () {
             this.style.transform = 'scale(0.95)';
             setTimeout(() => {
                 this.style.transform = '';
@@ -130,14 +130,14 @@ function initializeMainScreen() {
             }, 150);
         });
     }
-    
+
     // Add hover effects for menu buttons
     menuButtons.forEach(btn => {
-        btn.addEventListener('mouseenter', function() {
+        btn.addEventListener('mouseenter', function () {
             this.style.transform = 'translateY(-2px)';
         });
-        
-        btn.addEventListener('mouseleave', function() {
+
+        btn.addEventListener('mouseleave', function () {
             this.style.transform = '';
         });
     });
@@ -149,15 +149,15 @@ function showScreen(screenName) {
     screens.forEach(screen => {
         screen.classList.remove('active');
     });
-    
+
     // Show target screen
     const targetScreen = document.getElementById(screenName + '-screen');
     if (targetScreen) {
         targetScreen.classList.add('active');
         currentScreen = screenName;
-        
+
         // Initialize screen-specific content
-        switch(screenName) {
+        switch (screenName) {
             case 'message':
                 setTimeout(() => {
                     initializeMessage();
@@ -191,10 +191,10 @@ function initializeMessage() {
         clearInterval(typewriterInterval);
         typewriterInterval = null;
     }
-    
+
     const messageScreen = document.getElementById('message-screen');
     if (!messageScreen) return;
-    
+
     // Create or update the message screen content
     const pageScreen = messageScreen.querySelector('.page-screen');
     if (pageScreen) {
@@ -205,14 +205,14 @@ function initializeMessage() {
             </div>
             <button class="skip-btn">SKIP</button>
         `;
-        
+
         // Add skip button event listener
         const skipBtn = pageScreen.querySelector('.skip-btn');
         if (skipBtn) {
             skipBtn.addEventListener('click', skipTypewriter);
         }
     }
-    
+
     // Start typewriter effect
     setTimeout(() => {
         startTypewriter();
@@ -222,7 +222,7 @@ function initializeMessage() {
 function startTypewriter() {
     const messageContent = document.querySelector('.message-content');
     if (!messageContent) return;
-    
+
     const fullMessage = `Hi Lili,
 
 Happy Birthday!
@@ -232,17 +232,17 @@ Hari ini aku pengen kamu ngerasain semua hal positif dan keajaiban yang cuma bis
 Terima kasih udah jadi bagian hidup aku yang paling berharga. Kamu bener-bener bikin hari-hari aku jadi lebih berarti dan penuh warna. Semoga di tahun yang baru ini, kamu makin bahagia, makin sukses, dan tentunya makin cantik (walaupun udah cantik banget sih!).
 
 I love you so much! 💕`;
-    
+
     // Clear content and start fresh
     messageContent.innerHTML = '';
     let charIndex = 0;
     isTyping = true;
-    
+
     // Clear any existing interval
     if (typewriterInterval) {
         clearInterval(typewriterInterval);
     }
-    
+
     typewriterInterval = setInterval(() => {
         if (charIndex < fullMessage.length) {
             const char = fullMessage[charIndex];
@@ -278,10 +278,10 @@ function skipTypewriter() {
 function initializeGallery() {
     const galleryContent = document.querySelector('.gallery-content');
     if (!galleryContent) return;
-    
+
     // Clear existing content
     galleryContent.innerHTML = '';
-    
+
     // Create gallery structure
     const galleryHTML = `
         <div class="photobox-header">
@@ -297,9 +297,9 @@ function initializeGallery() {
             <button class="photo-btn">MULAI CETAK</button>
         </div>
     `;
-    
+
     galleryContent.innerHTML = galleryHTML;
-    
+
     // Add event listener for photo button after DOM is updated
     setTimeout(() => {
         const photoBtn = document.querySelector('.photo-btn');
@@ -314,11 +314,11 @@ function initializeGallery() {
 
 function startPhotoShow() {
     const photoBtn = document.querySelector('.photo-btn');
-    const photoDisplay = document.querySelector('.photo-display'); 
+    const photoDisplay = document.querySelector('.photo-display');
     const progressDiv = document.querySelector('.photobox-progress');
-    
+
     if (!photoBtn || !photoDisplay || !progressDiv) return;
-    
+
     // Foto lokal dari folder images
     const photos = [
         {
@@ -354,13 +354,13 @@ function startPhotoShow() {
             image: './images/photo8.jpg'
         }
     ];
-    
+
     console.log('Total photos:', photos.length);
-    
+
     photoBtn.textContent = 'MENCETAK...';
     photoBtn.disabled = true;
     progressDiv.textContent = 'INITIALIZING CAMERA...';
-    
+
     // Create photo frames HTML
     let framesHTML = '';
     for (let i = 0; i < photos.length; i++) {
@@ -370,7 +370,7 @@ function startPhotoShow() {
             </div>
         `;
     }
-    
+
     // Create vertical photo strip container
     const photoStripHTML = `
         <div class="photo-strip">
@@ -382,14 +382,14 @@ function startPhotoShow() {
         </div>
         <div class="scroll-indicator">⬇ Scroll Down ⬇</div>
     `;
-    
+
     photoDisplay.innerHTML = photoStripHTML;
     currentPhotoIndex = 0;
-    
+
     // Countdown before starting
     let countdown = 3;
     progressDiv.textContent = `GET READY... ${countdown}`;
-    
+
     const countdownInterval = setInterval(() => {
         countdown--;
         if (countdown > 0) {
@@ -408,26 +408,26 @@ function startPhotoCapture(photos) {
     const photoDisplay = document.querySelector('.photo-display');
     const framesContainer = document.querySelector('.photo-frames-container');
     const scrollIndicator = document.querySelector('.scroll-indicator');
-    
+
     console.log('Starting photo capture. Initial currentPhotoIndex:', currentPhotoIndex);
     console.log('Total photos to capture:', photos.length);
-    
+
     const captureInterval = setInterval(() => {
         console.log('=== CAPTURE LOOP ===');
         console.log('Current photo index:', currentPhotoIndex);
         console.log('Photos remaining:', photos.length - currentPhotoIndex);
-        
+
         if (currentPhotoIndex < photos.length) {
             const frameId = `frame-${currentPhotoIndex + 1}`;
             const frame = document.getElementById(frameId);
-            
+
             console.log('Processing frame:', frameId);
             console.log('Photo content:', photos[currentPhotoIndex]);
-            
+
             if (frame) {
                 // Flash effect
                 progressDiv.textContent = '✨ FLASH! ✨';
-                
+
                 // Auto scroll to current photo
                 setTimeout(() => {
                     if (framesContainer) {
@@ -435,9 +435,9 @@ function startPhotoCapture(photos) {
                             const frameTop = frame.offsetTop - framesContainer.offsetTop;
                             const containerHeight = framesContainer.clientHeight;
                             const frameHeight = frame.clientHeight;
-                            
+
                             const scrollPosition = frameTop - (containerHeight / 2) + (frameHeight / 2);
-                            
+
                             framesContainer.scrollTo({
                                 top: scrollPosition,
                                 behavior: 'smooth'
@@ -449,11 +449,11 @@ function startPhotoCapture(photos) {
                         }
                     }
                 }, 200);
-                
+
                 // Update frame content with image
                 setTimeout(() => {
                     frame.classList.add('filled');
-                    
+
                     const photo = photos[currentPhotoIndex];
                     frame.innerHTML = `
                         <img src="${photo.image}" alt="${photo.text}" class="photo-image" 
@@ -462,33 +462,33 @@ function startPhotoCapture(photos) {
                             <div class="photo-content">${photo.text}</div>
                         </div>
                     `;
-                    
+
                     const displayCount = currentPhotoIndex + 1;
                     progressDiv.textContent = `CAPTURED ${displayCount}/${photos.length}`;
-                    
+
                     console.log('Photo captured. Showing:', displayCount, 'of', photos.length);
-                    
+
                     if (currentPhotoIndex < photos.length - 1 && scrollIndicator) {
                         scrollIndicator.style.display = 'block';
                     }
-                    
+
                     currentPhotoIndex++;
                     console.log('Index incremented to:', currentPhotoIndex);
-                    
+
                 }, 500);
             } else {
                 console.error(`Frame with ID ${frameId} not found`);
                 currentPhotoIndex++;
             }
-            
+
         } else {
             console.log('=== ALL PHOTOS COMPLETED ===');
             clearInterval(captureInterval);
-            
+
             if (scrollIndicator) {
                 scrollIndicator.style.display = 'none';
             }
-            
+
             setTimeout(() => {
                 if (framesContainer) {
                     try {
@@ -498,12 +498,12 @@ function startPhotoCapture(photos) {
                     }
                 }
             }, 1000);
-            
+
             setTimeout(() => {
                 progressDiv.textContent = '🎉 PHOTO STRIP COMPLETE! 🎉';
                 photoBtn.textContent = 'CETAK LAGI';
                 photoBtn.disabled = false;
-                
+
                 photoBtn.removeEventListener('click', startPhotoShow);
                 photoBtn.addEventListener('click', startNewSession);
             }, 2000);
@@ -514,26 +514,26 @@ function startPhotoCapture(photos) {
 function startNewSession() {
     const photoBtn = document.querySelector('.photo-btn');
     const progressDiv = document.querySelector('.photobox-progress');
-    
+
     console.log('=== STARTING NEW SESSION ===');
-    
+
     // Reset for new session
     progressDiv.textContent = 'READY TO PRINT';
     photoBtn.textContent = 'MULAI CETAK';
-    
+
     // Remove old listener and add original
     photoBtn.removeEventListener('click', startNewSession);
     photoBtn.addEventListener('click', startPhotoShow);
-    
+
     // Clear display
     const photoDisplay = document.querySelector('.photo-display');
     if (photoDisplay) {
         photoDisplay.innerHTML = '<div class="photo-placeholder">Press MULAI CETAK to start photo session</div>';
     }
-    
+
     // CRITICAL: Reset photo index to exactly 0
     currentPhotoIndex = 0;
-    
+
     console.log('Session reset. Photo index:', currentPhotoIndex);
 }
 
@@ -542,7 +542,7 @@ function startNewSession() {
 function initializeMusicPlayer() {
     const musicContent = document.querySelector('.music-content');
     if (!musicContent) return;
-    
+
     musicContent.innerHTML = `
         <div class="spotify-container">
             <div class="spotify-header">
@@ -571,28 +571,28 @@ function initializeMusicPlayer() {
             </div>
         </div>
     `;
-    
+
     // Add music player event listeners
     addSpotifyPlayerListeners();
-    
+
     // Load default playlist
     loadSpotifyPlaylist(1);
 }
 
 function addSpotifyPlayerListeners() {
     const playlistBtns = document.querySelectorAll('.playlist-btn');
-    
+
     playlistBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function () {
             // Remove active class from all buttons
             playlistBtns.forEach(b => b.classList.remove('active'));
-            
+
             // Add active class to clicked button
             this.classList.add('active');
-            
+
             // Get playlist number
             const playlistNum = parseInt(this.getAttribute('data-playlist'));
-            
+
             // Load corresponding playlist
             loadSpotifyPlaylist(playlistNum);
         });
@@ -603,9 +603,9 @@ function loadSpotifyPlaylist(playlistNumber) {
     const iframe = document.getElementById('spotify-iframe');
     const currentPlaylist = document.querySelector('.current-playlist');
     const playlistDescription = document.querySelector('.playlist-description');
-    
+
     if (!iframe) return;
-    
+
     // Playlist data - Ganti dengan link playlist Spotify kamu
     const playlists = {
         1: {
@@ -627,26 +627,26 @@ function loadSpotifyPlaylist(playlistNumber) {
             description: 'Lagu-lagu yang mengingatkan kenangan indah 🌟'
         }
     };
-    
+
     const selectedPlaylist = playlists[playlistNumber];
-    
+
     if (selectedPlaylist) {
         // Update iframe source
         iframe.src = selectedPlaylist.embedUrl;
-        
+
         // Update info
         if (currentPlaylist) {
             currentPlaylist.textContent = `Now Playing: ${selectedPlaylist.name}`;
         }
-        
+
         if (playlistDescription) {
             playlistDescription.textContent = selectedPlaylist.description;
         }
-        
+
         // Add loading effect
         iframe.style.opacity = '0.5';
-        
-        iframe.onload = function() {
+
+        iframe.onload = function () {
             this.style.opacity = '1';
         };
     }
@@ -656,36 +656,36 @@ function loadSpotifyPlaylist(playlistNumber) {
 function initializeTetris() {
     const canvas = document.getElementById('tetris-canvas');
     if (!canvas) return;
-    
+
     const ctx = canvas.getContext('2d');
-    
+
     // Calculate much larger canvas size
     const gameContainer = document.querySelector('.tetris-game');
     if (gameContainer) {
         const containerRect = gameContainer.getBoundingClientRect();
-        
+
         // Much larger maximum dimensions - use almost all available space
         const maxWidth = containerRect.width - 15; // Only 15px margin
         const maxHeight = containerRect.height - 15; // Only 15px margin
-        
+
         // Maintain aspect ratio (approximately 1:2 for Tetris)
         const aspectRatio = 1 / 2;
         let canvasWidth = Math.min(maxWidth, maxHeight * aspectRatio);
         let canvasHeight = canvasWidth / aspectRatio;
-        
+
         // If height is too tall, adjust based on height
         if (canvasHeight > maxHeight) {
             canvasHeight = maxHeight;
             canvasWidth = canvasHeight * aspectRatio;
         }
-        
+
         // Ensure minimum reasonable size
         canvasWidth = Math.max(canvasWidth, 500);
         canvasHeight = Math.max(canvasHeight, 600);
-        
+
         canvas.width = Math.floor(canvasWidth);
         canvas.height = Math.floor(canvasHeight);
-        
+
         console.log('Container size:', containerRect.width, 'x', containerRect.height);
         console.log('Canvas size:', canvas.width, 'x', canvas.height);
     } else {
@@ -693,11 +693,11 @@ function initializeTetris() {
         canvas.width = 500; // Increased significantly
         canvas.height = 600; // Increased significantly
     }
-    
+
     // Calculate block size - ensure it's large enough to see clearly
     const blockSize = Math.max(Math.floor(canvas.width / 10), 25); // Minimum 25px blocks
     const boardHeight = Math.floor(canvas.height / blockSize);
-    
+
     tetrisGame = {
         canvas: canvas,
         ctx: ctx,
@@ -711,9 +711,9 @@ function initializeTetris() {
         boardWidth: 10,
         boardHeight: boardHeight
     };
-    
+
     console.log('Block size:', blockSize, 'Board:', tetrisGame.boardWidth, 'x', tetrisGame.boardHeight);
-    
+
     updateTetrisStats();
     drawTetrisBoard();
     addTetrisListeners();
@@ -732,17 +732,17 @@ function createEmptyBoard(width, height) {
 
 function drawTetrisBoard() {
     if (!tetrisGame) return;
-    
+
     const { ctx, canvas, board, blockSize } = tetrisGame;
-    
+
     // Clear canvas with proper background
     ctx.fillStyle = '#0a0a0a';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
+
     // Draw more visible grid lines for larger canvas
     ctx.strokeStyle = '#333';
     ctx.lineWidth = 1; // Thicker lines for better visibility
-    
+
     // Vertical lines
     for (let x = 0; x <= tetrisGame.boardWidth; x++) {
         ctx.beginPath();
@@ -750,7 +750,7 @@ function drawTetrisBoard() {
         ctx.lineTo(x * blockSize, canvas.height);
         ctx.stroke();
     }
-    
+
     // Horizontal lines
     for (let y = 0; y <= board.length; y++) {
         ctx.beginPath();
@@ -758,7 +758,7 @@ function drawTetrisBoard() {
         ctx.lineTo(canvas.width, y * blockSize);
         ctx.stroke();
     }
-    
+
     // Draw placed blocks
     for (let y = 0; y < board.length; y++) {
         for (let x = 0; x < board[y].length; x++) {
@@ -767,12 +767,12 @@ function drawTetrisBoard() {
             }
         }
     }
-    
+
     // Draw current piece
     if (tetrisGame.currentPiece) {
         drawPiece(tetrisGame.currentPiece);
     }
-    
+
     // Draw prominent border around play area
     ctx.strokeStyle = '#9bbc0f';
     ctx.lineWidth = 4; // Much thicker border
@@ -781,40 +781,40 @@ function drawTetrisBoard() {
 
 function drawBlock(x, y, color) {
     if (!tetrisGame) return;
-    
+
     const { ctx, blockSize } = tetrisGame;
     const padding = Math.max(2, Math.floor(blockSize * 0.08)); // Larger padding for bigger blocks
-    
+
     // Main block with rounded corners effect
     ctx.fillStyle = color;
     ctx.fillRect(
-        x * blockSize + padding, 
-        y * blockSize + padding, 
-        blockSize - padding * 2, 
+        x * blockSize + padding,
+        y * blockSize + padding,
+        blockSize - padding * 2,
         blockSize - padding * 2
     );
-    
+
     // Enhanced 3D effect for larger blocks
     if (blockSize > 20) {
         const effectSize = Math.max(2, Math.floor(blockSize * 0.12));
-        
+
         // Highlight (top and left edges) - brighter for better visibility
         ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
         ctx.fillRect(x * blockSize + padding, y * blockSize + padding, blockSize - padding * 2, effectSize);
         ctx.fillRect(x * blockSize + padding, y * blockSize + padding, effectSize, blockSize - padding * 2);
-        
+
         // Shadow (bottom and right edges) - darker for better contrast
         ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
         ctx.fillRect(x * blockSize + padding, y * blockSize + blockSize - padding - effectSize, blockSize - padding * 2, effectSize);
         ctx.fillRect(x * blockSize + blockSize - padding - effectSize, y * blockSize + padding, effectSize, blockSize - padding * 2);
-        
+
         // Inner border for more definition
         ctx.strokeStyle = 'rgba(0, 0, 0, 0.3)';
         ctx.lineWidth = 1;
         ctx.strokeRect(
-            x * blockSize + padding, 
-            y * blockSize + padding, 
-            blockSize - padding * 2, 
+            x * blockSize + padding,
+            y * blockSize + padding,
+            blockSize - padding * 2,
             blockSize - padding * 2
         );
     }
@@ -845,55 +845,55 @@ function getBlockColor(type) {
 
 function createTetrisPiece() {
     const pieces = [
-        { shape: [[0,0,0,0],[1,1,1,1],[0,0,0,0],[0,0,0,0]], x: 3, y: 0 }, // I
-        { shape: [[2,2],[2,2]], x: 4, y: 0 }, // O
-        { shape: [[0,3,0],[3,3,3],[0,0,0]], x: 3, y: 0 }, // T
-        { shape: [[0,4,4],[4,4,0],[0,0,0]], x: 3, y: 0 }, // S
-        { shape: [[5,5,0],[0,5,5],[0,0,0]], x: 3, y: 0 }, // Z
-        { shape: [[6,0,0],[6,6,6],[0,0,0]], x: 3, y: 0 }, // J
-        { shape: [[0,0,7],[7,7,7],[0,0,0]], x: 3, y: 0 }  // L
+        { shape: [[0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0]], x: 3, y: 0 }, // I
+        { shape: [[2, 2], [2, 2]], x: 4, y: 0 }, // O
+        { shape: [[0, 3, 0], [3, 3, 3], [0, 0, 0]], x: 3, y: 0 }, // T
+        { shape: [[0, 4, 4], [4, 4, 0], [0, 0, 0]], x: 3, y: 0 }, // S
+        { shape: [[5, 5, 0], [0, 5, 5], [0, 0, 0]], x: 3, y: 0 }, // Z
+        { shape: [[6, 0, 0], [6, 6, 6], [0, 0, 0]], x: 3, y: 0 }, // J
+        { shape: [[0, 0, 7], [7, 7, 7], [0, 0, 0]], x: 3, y: 0 }  // L
     ];
-    
+
     return pieces[Math.floor(Math.random() * pieces.length)];
 }
 
 function startTetrisGame() {
     if (!tetrisGame) return;
-    
+
     tetrisGame.gameRunning = true;
     tetrisGame.currentPiece = createTetrisPiece();
     gameScore = 0;
     gameLevel = 1;
     gameLines = 0;
     updateTetrisStats();
-    
+
     tetrisGameLoop();
 }
 
 function tetrisGameLoop(time = 0) {
     if (!tetrisGame || !tetrisGame.gameRunning) return;
-    
+
     const deltaTime = time - tetrisGame.lastTime;
     tetrisGame.lastTime = time;
     tetrisGame.dropTime += deltaTime;
-    
+
     if (tetrisGame.dropTime > tetrisGame.dropInterval) {
         moveTetrisPiece('down');
         tetrisGame.dropTime = 0;
     }
-    
+
     drawTetrisBoard();
     requestAnimationFrame(tetrisGameLoop);
 }
 
 function moveTetrisPiece(direction) {
     if (!tetrisGame || !tetrisGame.currentPiece) return;
-    
+
     const piece = tetrisGame.currentPiece;
     let newX = piece.x;
     let newY = piece.y;
-    
-    switch(direction) {
+
+    switch (direction) {
         case 'left':
             newX = piece.x - 1;
             break;
@@ -904,7 +904,7 @@ function moveTetrisPiece(direction) {
             newY = piece.y + 1;
             break;
     }
-    
+
     if (isValidMove(piece.shape, newX, newY)) {
         piece.x = newX;
         piece.y = newY;
@@ -912,7 +912,7 @@ function moveTetrisPiece(direction) {
         placePiece();
         clearLines();
         tetrisGame.currentPiece = createTetrisPiece();
-        
+
         if (!isValidMove(tetrisGame.currentPiece.shape, tetrisGame.currentPiece.x, tetrisGame.currentPiece.y)) {
             gameOver();
         }
@@ -921,10 +921,10 @@ function moveTetrisPiece(direction) {
 
 function rotateTetrisPiece() {
     if (!tetrisGame || !tetrisGame.currentPiece) return;
-    
+
     const piece = tetrisGame.currentPiece;
     const rotatedShape = rotateMatrix(piece.shape);
-    
+
     if (isValidMove(rotatedShape, piece.x, piece.y)) {
         piece.shape = rotatedShape;
     }
@@ -932,18 +932,18 @@ function rotateTetrisPiece() {
 
 function isValidMove(shape, x, y) {
     if (!tetrisGame) return false;
-    
+
     for (let py = 0; py < shape.length; py++) {
         for (let px = 0; px < shape[py].length; px++) {
             if (shape[py][px] !== 0) {
                 const newX = x + px;
                 const newY = y + py;
-                
+
                 // Check boundaries
                 if (newX < 0 || newX >= tetrisGame.boardWidth || newY >= tetrisGame.boardHeight) {
                     return false;
                 }
-                
+
                 // Check collision with placed blocks
                 if (newY >= 0 && tetrisGame.board[newY] && tetrisGame.board[newY][newX] !== 0) {
                     return false;
@@ -951,15 +951,15 @@ function isValidMove(shape, x, y) {
             }
         }
     }
-    
+
     return true;
 }
 
 function placePiece() {
     if (!tetrisGame || !tetrisGame.currentPiece) return;
-    
+
     const piece = tetrisGame.currentPiece;
-    
+
     piece.shape.forEach((row, y) => {
         row.forEach((value, x) => {
             if (value !== 0) {
@@ -975,9 +975,9 @@ function placePiece() {
 
 function clearLines() {
     if (!tetrisGame) return;
-    
+
     let linesCleared = 0;
-    
+
     for (let y = tetrisGame.board.length - 1; y >= 0; y--) {
         if (tetrisGame.board[y].every(cell => cell !== 0)) {
             tetrisGame.board.splice(y, 1);
@@ -986,18 +986,18 @@ function clearLines() {
             y++; // Check the same line again
         }
     }
-    
+
     if (linesCleared > 0) {
         gameLines += linesCleared;
-        
+
         // Scoring system
         const lineScores = [0, 40, 100, 300, 1200];
         gameScore += (lineScores[linesCleared] || 0) * gameLevel;
-        
+
         // Level progression
         gameLevel = Math.floor(gameLines / 10) + 1;
         tetrisGame.dropInterval = Math.max(50, 1000 - (gameLevel - 1) * 50);
-        
+
         updateTetrisStats();
     }
 }
@@ -1006,14 +1006,14 @@ function rotateMatrix(matrix) {
     const rows = matrix.length;
     const cols = matrix[0].length;
     const rotated = [];
-    
+
     for (let i = 0; i < cols; i++) {
         rotated[i] = [];
         for (let j = 0; j < rows; j++) {
             rotated[i][j] = matrix[rows - 1 - j][i];
         }
     }
-    
+
     return rotated;
 }
 
@@ -1021,7 +1021,7 @@ function updateTetrisStats() {
     const scoreEl = document.getElementById('score');
     const levelEl = document.getElementById('level');
     const linesEl = document.getElementById('lines');
-    
+
     if (scoreEl) scoreEl.textContent = gameScore;
     if (levelEl) levelEl.textContent = gameLevel;
     if (linesEl) linesEl.textContent = gameLines;
@@ -1048,7 +1048,7 @@ function resetTetrisGame() {
 }
 
 // Add window resize handler for responsive canvas
-window.addEventListener('resize', function() {
+window.addEventListener('resize', function () {
     if (currentScreen === 'tetris' && tetrisGame) {
         // Reinitialize with new dimensions
         setTimeout(() => {
@@ -1062,74 +1062,74 @@ function addEventListeners() {
     // Menu buttons
     const menuButtons = document.querySelectorAll('.menu-btn');
     menuButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             const page = this.getAttribute('data-page');
             if (page) {
                 showScreen(page);
             }
         });
     });
-    
+
     // Back buttons
     const backButtons = document.querySelectorAll('.back-btn');
     backButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             const page = this.getAttribute('data-page');
             if (page) {
                 showScreen(page);
             }
         });
     });
-    
+
     // Start button
     const startBtn = document.querySelector('.start-btn');
     if (startBtn) {
-        startBtn.addEventListener('click', function() {
+        startBtn.addEventListener('click', function () {
             if (currentScreen === 'main') {
                 showScreen('message');
             }
         });
     }
-    
+
     // Continue buttons
     const continueButtons = document.querySelectorAll('.continue-btn');
     continueButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             handleContinueNavigation();
         });
     });
-    
+
     // Skip button
     const skipBtn = document.querySelector('.skip-btn');
     if (skipBtn) {
-        skipBtn.addEventListener('click', function() {
+        skipBtn.addEventListener('click', function () {
             skipTypewriter();
         });
     }
-    
+
     // Modal buttons
     const confirmBtn = document.getElementById('confirm-btn');
     const okBtn = document.getElementById('ok-btn');
-    
+
     if (confirmBtn) {
-        confirmBtn.addEventListener('click', function() {
+        confirmBtn.addEventListener('click', function () {
             document.getElementById('game-over-modal').classList.remove('active');
             document.getElementById('final-message-modal').classList.add('active');
         });
     }
-    
+
     if (okBtn) {
-        okBtn.addEventListener('click', function() {
+        okBtn.addEventListener('click', function () {
             document.getElementById('final-message-modal').classList.remove('active');
             showScreen('main');
             resetTetrisGame();
         });
     }
-    
+
     // Keyboard controls
-    document.addEventListener('keydown', function(event) {
+    document.addEventListener('keydown', function (event) {
         if (currentScreen === 'tetris' && tetrisGame && tetrisGame.gameRunning) {
-            switch(event.key) {
+            switch (event.key) {
                 case 'ArrowLeft':
                     event.preventDefault();
                     moveTetrisPiece('left');
@@ -1156,28 +1156,28 @@ function addTetrisListeners() {
     const leftBtn = document.getElementById('left-btn');
     const rightBtn = document.getElementById('right-btn');
     const rotateBtn = document.getElementById('rotate-btn');
-    
+
     if (leftBtn) {
-        leftBtn.addEventListener('click', function() {
+        leftBtn.addEventListener('click', function () {
             moveTetrisPiece('left');
         });
     }
-    
+
     if (rightBtn) {
-        rightBtn.addEventListener('click', function() {
+        rightBtn.addEventListener('click', function () {
             moveTetrisPiece('right');
         });
     }
-    
+
     if (rotateBtn) {
-        rotateBtn.addEventListener('click', function() {
+        rotateBtn.addEventListener('click', function () {
             rotateTetrisPiece();
         });
     }
 }
 
 function handleContinueNavigation() {
-    switch(currentScreen) {
+    switch (currentScreen) {
         case 'message':
             showScreen('gallery');
             break;
